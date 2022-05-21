@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+  http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="bookingFacade" class="org.oka.springmvc.facade.BookingFacadeImpl"/>
+
+    <bean id="userService" class="org.oka.springmvc.service.UserService"/>
+
+    <bean id="userDAO" class="org.oka.springmvc.dao.UserDAO" p:userDB-ref="userDB" p:pageable-ref="pageable"/>
+
+    <bean id="userDB" class="org.oka.springmvc.db.UserDB" init-method="initBean"/>
+
+    <bean id="eventService" class="org.oka.springmvc.service.EventService"/>
+
+    <bean id="eventDAO" class="org.oka.springmvc.dao.EventDAO" p:eventDB-ref="eventDB" p:pageable-ref="pageable"/>
+
+    <bean id="eventDB" class="org.oka.springmvc.db.EventDB" init-method="initBean"/>
+
+    <bean id="ticketService" class="org.oka.springmvc.service.TicketService"/>
+
+    <bean id="ticketDAO" class="org.oka.springmvc.dao.TicketDAO" p:ticketDB-ref="ticketDB" p:pageable-ref="pageable"/>
+
+    <bean id="ticketDB" class="org.oka.springmvc.db.TicketDB" init-method="initBean"/>
+
+    <bean id="pageable" class="org.oka.springmvc.dao.Pageable"/>
+</beans>
