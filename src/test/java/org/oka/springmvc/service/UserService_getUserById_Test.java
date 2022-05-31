@@ -5,14 +5,13 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.oka.springmvc.dao.UserDAO;
 import org.oka.springmvc.model.User;
-import org.oka.springmvc.model.UserImpl;
+import org.oka.springmvc.repository.UserRepository;
 
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -22,28 +21,28 @@ public class UserService_getUserById_Test {
     @InjectMocks
     UserService userService;
     @Mock
-    UserDAO userDAO;
+    UserRepository userRepository;
 
     @Test
     void shouldCallUserDAO() {
         // Given
         long userId = 13;
 
-        when(userDAO.getById(anyLong())).thenReturn(Optional.of(new UserImpl(1, "Jose", "jose.canseco@aa.com")));
+        when(userRepository.findById(anyLong())).thenReturn(Optional.of(new User(1, "Jose", "jose.canseco@aa.com")));
         // When
         userService.getUserById(userId);
 
         // Then
-        verify(userDAO).getById(userId);
+        verify(userRepository).findById(userId);
     }
 
     @Test
     void shouldReturnUser() {
         // Given
         long userId = 13;
-        User user = new UserImpl(1, "Jose", "jose.canseco@aa.com");
+        User user = new User(1, "Jose", "jose.canseco@aa.com");
 
-        when(userDAO.getById(anyLong())).thenReturn(Optional.of(user));
+        when(userRepository.findById(anyLong())).thenReturn(Optional.of(user));
         // When
         User actual = userService.getUserById(userId);
 
@@ -56,7 +55,7 @@ public class UserService_getUserById_Test {
         // Given
         long userId = 13;
 
-        when(userDAO.getById(anyLong())).thenReturn(Optional.empty());
+        when(userRepository.findById(anyLong())).thenReturn(Optional.empty());
         // When
         RuntimeException runtimeException = assertThrows(RuntimeException.class, () -> userService.getUserById(userId));
 

@@ -6,7 +6,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.oka.springmvc.model.Event;
-import org.oka.springmvc.model.EventImpl;
 import org.oka.springmvc.service.EventService;
 
 import java.time.LocalDate;
@@ -25,7 +24,7 @@ public class BookingFacadeImpl_createEvent_Test {
     @Test
     void shouldCallEventService() {
         // Given
-        Event event = EventImpl.builder().title("title").date(LocalDate.parse("2020-04-05")).build();
+        Event event = Event.builder().title("title").date(LocalDate.parse("2020-04-05")).build();
 
         // When
         bookingFacadeImpl.createEvent(event);
@@ -37,8 +36,8 @@ public class BookingFacadeImpl_createEvent_Test {
     @Test
     void shouldReturnEvent() {
         // Given
-        Event event = EventImpl.builder().title("title").date(LocalDate.parse("2020-04-05")).build();
-        Event persistedEvent = EventImpl.builder().id(15).title("title").date(LocalDate.parse("2020-04-05")).build();
+        Event event = Event.builder().title("title").date(LocalDate.parse("2020-04-05")).build();
+        Event persistedEvent = Event.builder().id(15).title("title").date(LocalDate.parse("2020-04-05")).build();
 
         when(eventService.createEvent(event)).thenReturn(persistedEvent);
         // When

@@ -1,36 +1,32 @@
 package org.oka.springmvc.facade;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.oka.springmvc.db.EventDB;
 import org.oka.springmvc.model.Event;
-import org.oka.springmvc.model.EventImpl;
+import org.oka.springmvc.repository.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import static java.time.LocalDate.now;
 import static org.assertj.core.api.Assertions.assertThat;
 
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration("/test-configuration.xml")
+@SpringBootTest
 public class BookingFacadeImpl_deleteEvent_IT {
     @Autowired
     BookingFacade bookingFacade;
     @Autowired
-    EventDB eventDB;
+    EventRepository eventRepository;
 
     @Test
     public void shouldDeleteEvent() {
         // Given
-        Event event = EventImpl.builder().title("title").date(now()).build();
+        Event event = Event.builder().title("title").date(now()).build();
         Event persisted = bookingFacade.createEvent(event);
-        assertThat(eventDB.getEvents()).contains(event);
+        assertThat(eventRepository.findById(event.getId())).isNotEmpty();
 
         // When
         bookingFacade.deleteEvent(persisted.getId());
 
         // Then
-        assertThat(eventDB.getEvents()).doesNotContain(persisted);
+        assertThat(eventRepository.findById(event.getId())).isEmpty();
     }
 }

@@ -5,9 +5,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.oka.springmvc.dao.EventDAO;
 import org.oka.springmvc.model.Event;
-import org.oka.springmvc.model.EventImpl;
+import org.oka.springmvc.repository.EventRepository;
 
 import java.time.LocalDate;
 import java.util.Optional;
@@ -23,28 +22,28 @@ public class EventService_getEventById_Test {
     @InjectMocks
     EventService eventService;
     @Mock
-    EventDAO eventDAO;
+    EventRepository eventRepository;
 
     @Test
     void shouldCallEventDAO() {
         // Given
         long eventId = 13;
 
-        when(eventDAO.getById(anyLong())).thenReturn(Optional.of(new EventImpl(1, "Jose", LocalDate.now())));
+        when(eventRepository.findById(anyLong())).thenReturn(Optional.of(new Event(1, "Jose", LocalDate.now())));
         // When
         eventService.getEventById(eventId);
 
         // Then
-        verify(eventDAO).getById(eventId);
+        verify(eventRepository).findById(eventId);
     }
 
     @Test
     void shouldReturnEvent() {
         // Given
         long eventId = 4;
-        Event event = new EventImpl(1, "Jose", LocalDate.now());
+        Event event = new Event(1, "Jose", LocalDate.now());
 
-        when(eventDAO.getById(anyLong())).thenReturn(Optional.of(event));
+        when(eventRepository.findById(anyLong())).thenReturn(Optional.of(event));
         // When
         Event actual = eventService.getEventById(eventId);
 
@@ -57,7 +56,7 @@ public class EventService_getEventById_Test {
         // Given
         long eventId = 13;
 
-        when(eventDAO.getById(anyLong())).thenReturn(Optional.empty());
+        when(eventRepository.findById(anyLong())).thenReturn(Optional.empty());
         // When
         RuntimeException runtimeException = assertThrows(RuntimeException.class, () -> eventService.getEventById(eventId));
 

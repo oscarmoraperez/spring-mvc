@@ -5,9 +5,14 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.oka.springmvc.model.Event;
 import org.oka.springmvc.model.Ticket;
-import org.oka.springmvc.model.TicketImpl;
+import org.oka.springmvc.model.User;
+import org.oka.springmvc.service.EventService;
 import org.oka.springmvc.service.TicketService;
+import org.oka.springmvc.service.UserService;
+
+import java.time.LocalDate;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
@@ -20,30 +25,42 @@ public class BookingFacadeImpl_bookTicket_Test {
     BookingFacadeImpl bookingFacade;
     @Mock
     TicketService ticketService;
+    @Mock
+    UserService userService;
+    @Mock
+    EventService eventService;
 
     @Test
     public void shouldCallTicketService() {
         // Given
+        User user = new User(1, "Karl", "karl@dom.com");
+        Event event = new Event(1, "Hamlet", LocalDate.now());
 
+        when(userService.getUserById(user.getId())).thenReturn(user);
+        when(eventService.getEventById(event.getId())).thenReturn(event);
         // When
-        bookingFacade.bookTicket(1, 33, 66, PREMIUM);
+        bookingFacade.bookTicket(user.getId(), event.getId(), 66, PREMIUM);
 
         // Then
-        verify(ticketService).bookTicket(1, 33, 66, PREMIUM);
+        verify(ticketService).bookTicket(user, event, 66, PREMIUM);
     }
 
     @Test
     public void shouldReturnTicket() {
         // Given
-        Ticket persistedTicket = TicketImpl.builder().userId(1).eventId(33).place(66).category(PREMIUM).build();
+        User user = new User(1, "Karl", "karl@dom.com");
+        Event event = new Event(1, "Hamlet", LocalDate.now());
+        Ticket persistedTicket = Ticket.builder().user(user).event(event).place(66).category(PREMIUM).build();
 
-        when(ticketService.bookTicket(1, 33, 66, PREMIUM)).thenReturn(persistedTicket);
+        when(userService.getUserById(user.getId())).thenReturn(user);
+        when(eventService.getEventById(event.getId())).thenReturn(event);
+        when(ticketService.bookTicket(user, event, 66, PREMIUM)).thenReturn(persistedTicket);
         // When
-        Ticket ticket = bookingFacade.bookTicket(1, 33, 66, PREMIUM);
+        Ticket ticket = bookingFacade.bookTicket(1, 1, 66, PREMIUM);
 
         // Then
-        assertThat(ticket.getUserId()).isEqualTo(1);
-        assertThat(ticket.getEventId()).isEqualTo(33);
+        assertThat(ticket.getUser()).isEqualTo(user);
+        assertThat(ticket.getEvent()).isEqualTo(event);
         assertThat(ticket.getPlace()).isEqualTo(66);
         assertThat(ticket.getCategory()).isEqualTo(PREMIUM);
     }

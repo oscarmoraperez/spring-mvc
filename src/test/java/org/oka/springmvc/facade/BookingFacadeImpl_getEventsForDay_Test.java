@@ -6,15 +6,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.oka.springmvc.model.Event;
-import org.oka.springmvc.model.EventImpl;
 import org.oka.springmvc.service.EventService;
 
 import java.time.LocalDate;
 import java.util.List;
 
-import static java.time.LocalDate.now;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -43,7 +40,7 @@ public class BookingFacadeImpl_getEventsForDay_Test {
     void shouldReturnEvents() {
         // Given
         LocalDate now = LocalDate.now();
-        Event event = new EventImpl(1, "title", now);
+        Event event = new Event(1, "title", now);
 
         when(eventService.getEventsForDay(now, 1, 23)).thenReturn(List.of(event));
         // When

@@ -5,9 +5,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.oka.springmvc.dao.UserDAO;
 import org.oka.springmvc.model.User;
-import org.oka.springmvc.model.UserImpl;
+import org.oka.springmvc.repository.UserRepository;
 
 import java.util.Optional;
 
@@ -22,28 +21,28 @@ public class UserService_getUserByEmail_Test {
     @InjectMocks
     UserService userService;
     @Mock
-    UserDAO userDAO;
+    UserRepository userRepository;
 
     @Test
     void shouldCallUserDAO() {
         // Given
         String email = "name@domain.com";
 
-        when(userDAO.getByEmail(anyString())).thenReturn(Optional.of(new UserImpl(1, "Jose", "jose.canseco@aa.com")));
+        when(userRepository.findByEmail(anyString())).thenReturn(Optional.of(new User(1, "Jose", "jose.canseco@aa.com")));
         // When
         userService.getUserByEmail(email);
 
         // Then
-        verify(userDAO).getByEmail(email);
+        verify(userRepository).findByEmail(email);
     }
 
     @Test
     void shouldReturnUser() {
         // Given
         String email = "jose.canseco@aa.com";
-        User user = new UserImpl(1, "Jose", "jose.canseco@aa.com");
+        User user = new User(1, "Jose", "jose.canseco@aa.com");
 
-        when(userDAO.getByEmail(anyString())).thenReturn(Optional.of(user));
+        when(userRepository.findByEmail(anyString())).thenReturn(Optional.of(user));
         // When
         User actual = userService.getUserByEmail(email);
 
@@ -56,7 +55,7 @@ public class UserService_getUserByEmail_Test {
         // Given
         String email = "jose.canseco@aa.com";
 
-        when(userDAO.getByEmail(anyString())).thenReturn(Optional.empty());
+        when(userRepository.findByEmail(anyString())).thenReturn(Optional.empty());
         // When
         RuntimeException runtimeException = assertThrows(RuntimeException.class, () -> userService.getUserByEmail(email));
 

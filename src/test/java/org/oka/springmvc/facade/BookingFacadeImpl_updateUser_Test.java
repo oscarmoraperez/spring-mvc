@@ -6,7 +6,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.oka.springmvc.model.User;
-import org.oka.springmvc.model.UserImpl;
 import org.oka.springmvc.service.UserService;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -23,7 +22,7 @@ public class BookingFacadeImpl_updateUser_Test {
     @Test
     void shouldCallUserService() {
         // Given
-        User user = new UserImpl(1, "name", "email");
+        User user = new User(1, "name", "email");
 
         // When
         bookingFacadeImpl.updateUser(user);
@@ -35,7 +34,7 @@ public class BookingFacadeImpl_updateUser_Test {
     @Test
     void shouldReturnUser() {
         // Given
-        User user = new UserImpl(1, "name", "email");
+        User user = new User(1, "name", "email");
 
         when(userService.updateUser(user)).thenReturn(user);
         // When

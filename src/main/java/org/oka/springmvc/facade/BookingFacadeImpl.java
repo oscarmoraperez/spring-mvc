@@ -7,11 +7,13 @@ import org.oka.springmvc.model.User;
 import org.oka.springmvc.service.EventService;
 import org.oka.springmvc.service.TicketService;
 import org.oka.springmvc.service.UserService;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.List;
 
 @RequiredArgsConstructor
+@Component
 public class BookingFacadeImpl implements BookingFacade {
     private final UserService userService;
     private final EventService eventService;
@@ -79,7 +81,10 @@ public class BookingFacadeImpl implements BookingFacade {
 
     @Override
     public Ticket bookTicket(final long userId, final long eventId, final int place, final Ticket.Category category) {
-        return ticketService.bookTicket(userId, eventId, place, category);
+        User user = userService.getUserById(userId);
+        Event event = eventService.getEventById(eventId);
+
+        return ticketService.bookTicket(user, event, place, category);
     }
 
     @Override

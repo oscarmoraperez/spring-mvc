@@ -1,35 +1,31 @@
 package org.oka.springmvc.facade;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.oka.springmvc.db.UserDB;
 import org.oka.springmvc.model.User;
-import org.oka.springmvc.model.UserImpl;
+import org.oka.springmvc.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration("/test-configuration.xml")
+@SpringBootTest
 public class BookingFacadeImpl_deleteUser_IT {
     @Autowired
     BookingFacade bookingFacade;
     @Autowired
-    UserDB userDB;
+    UserRepository userRepository;
 
     @Test
     public void shouldDeleteUser() {
         // Given
-        User user = UserImpl.builder().name("Peter").email("peter@domain.com").build();
+        User user = User.builder().name("Peter").email("peter@domain.com").build();
         User persisted = bookingFacade.createUser(user);
-        assertThat(userDB.getUsers()).contains(persisted);
+        assertThat(userRepository.findById(persisted.getId())).isNotEmpty();
 
         // When
         bookingFacade.deleteUser(persisted.getId());
 
         // Then
-        assertThat(userDB.getUsers()).doesNotContain(persisted);
+        assertThat(userRepository.findById(persisted.getId())).isEmpty();
     }
 }

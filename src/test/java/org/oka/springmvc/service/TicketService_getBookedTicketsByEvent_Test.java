@@ -5,11 +5,11 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.oka.springmvc.dao.TicketDAO;
 import org.oka.springmvc.model.Event;
-import org.oka.springmvc.model.EventImpl;
 import org.oka.springmvc.model.Ticket;
-import org.oka.springmvc.model.TicketImpl;
+import org.oka.springmvc.model.User;
+import org.oka.springmvc.repository.TicketRepository;
+import org.springframework.data.domain.PageRequest;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -24,27 +24,28 @@ public class TicketService_getBookedTicketsByEvent_Test {
     @InjectMocks
     TicketService ticketService;
     @Mock
-    TicketDAO ticketDAO;
+    TicketRepository ticketRepository;
 
     @Test
-    public void shouldCallDAO() {
+    public void shouldCallTicketRepository() {
         // Given
-        Event event = EventImpl.builder().title("title").date(LocalDate.now()).build();
+        Event event = Event.builder().title("title").date(LocalDate.now()).build();
 
         // When
         ticketService.getBookedTickets(event, 55, 99);
 
         // Then
-        verify(ticketDAO).getBookedTickets(event, 55, 99);
+        verify(ticketRepository).findByEvent(event, PageRequest.of(99, 55));
     }
 
     @Test
     public void shouldReturnTickets() {
         // Given
-        Event event = EventImpl.builder().title("title").date(LocalDate.now()).build();
-        Ticket ticket = TicketImpl.builder().userId(1).eventId(44).place(5).category(BAR).build();
+        Event event = Event.builder().title("title").date(LocalDate.now()).build();
+        User user = User.builder().id(1).build();
+        Ticket ticket = Ticket.builder().user(user).event(event).place(5).category(BAR).build();
 
-        when(ticketDAO.getBookedTickets(event, 44, 22)).thenReturn(List.of(ticket));
+        when(ticketRepository.findByEvent(event, PageRequest.of(22, 44))).thenReturn(List.of(ticket));
         // When
         List<Ticket> actual = ticketService.getBookedTickets(event, 44, 22);
 

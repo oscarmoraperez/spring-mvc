@@ -5,9 +5,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.oka.springmvc.dao.EventDAO;
 import org.oka.springmvc.model.Event;
-import org.oka.springmvc.model.EventImpl;
+import org.oka.springmvc.repository.EventRepository;
+import org.springframework.data.domain.PageRequest;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -22,7 +22,7 @@ public class EventService_getEventsForDay_Test {
     @InjectMocks
     EventService eventService;
     @Mock
-    EventDAO eventDAO;
+    EventRepository eventRepository;
 
     @Test
     public void shouldCallEventDAO() {
@@ -35,7 +35,7 @@ public class EventService_getEventsForDay_Test {
         eventService.getEventsForDay(day, pageSize, pageNum);
 
         // Then
-        verify(eventDAO).getByDate(day, pageSize, pageNum);
+        verify(eventRepository).findByDate(day, PageRequest.of(pageNum, pageSize));
     }
 
     @Test
@@ -44,9 +44,9 @@ public class EventService_getEventsForDay_Test {
         LocalDate day = LocalDate.now();
         int pageNum = 22;
         int pageSize = 66;
-        Event event = EventImpl.builder().title("title").date(day).build();
+        Event event = Event.builder().title("title").date(day).build();
 
-        when(eventDAO.getByDate(day, pageSize, pageNum)).thenReturn(List.of(event));
+        when(eventRepository.findByDate(day, PageRequest.of(pageNum, pageSize))).thenReturn(List.of(event));
         // When
         List<Event> events = eventService.getEventsForDay(day, pageSize, pageNum);
 

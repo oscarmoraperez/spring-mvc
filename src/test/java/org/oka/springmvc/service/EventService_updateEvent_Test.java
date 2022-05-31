@@ -5,9 +5,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.oka.springmvc.dao.EventDAO;
 import org.oka.springmvc.model.Event;
-import org.oka.springmvc.model.EventImpl;
+import org.oka.springmvc.repository.EventRepository;
 
 import static java.time.LocalDate.now;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -19,27 +18,27 @@ public class EventService_updateEvent_Test {
     @InjectMocks
     EventService eventService;
     @Mock
-    EventDAO eventDAO;
+    EventRepository eventRepository;
 
     @Test
     void shouldCallEventDAO() {
         // Given
-        Event event = EventImpl.builder().title("title").date(now()).build();
+        Event event = Event.builder().title("title").date(now()).build();
 
         // When
         eventService.updateEvent(event);
 
         // Then
-        verify(eventDAO).update(event);
+        verify(eventRepository).save(event);
     }
 
     @Test
     void shouldReturnEvent() {
         // Given
-        Event event = EventImpl.builder().title("title").date(now()).build();
-        Event eventUpdated = EventImpl.builder().id(45).title("title2").date(now().plusDays(55)).build();
+        Event event = Event.builder().title("title").date(now()).build();
+        Event eventUpdated = Event.builder().id(45).title("title2").date(now().plusDays(55)).build();
 
-        when(eventDAO.update(event)).thenReturn(eventUpdated);
+        when(eventRepository.save(event)).thenReturn(eventUpdated);
         // When
         Event actualEvent = eventService.updateEvent(event);
 

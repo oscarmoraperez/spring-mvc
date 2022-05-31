@@ -1,35 +1,40 @@
 package org.oka.springmvc.model;
 
-/**
- * Created by maksym_govorischev.
- */
-public interface Ticket {
-    /**
-     * Ticket Id. UNIQUE.
-     *
-     * @return Ticket Id.
-     */
-    long getId();
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
-    void setId(long id);
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
-    long getEventId();
+@AllArgsConstructor
+@Setter
+@Getter
+@ToString
+@EqualsAndHashCode
+@Builder
+@NoArgsConstructor
+@Entity
+public class Ticket {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+    @OneToOne(targetEntity = Event.class)
+    private Event event;
+    @OneToOne(targetEntity = User.class)
+    private User user;
+    @Enumerated(EnumType.STRING)
+    private Category category;
+    private int place;
 
-    void setEventId(long eventId);
-
-    long getUserId();
-
-    void setUserId(long userId);
-
-    Category getCategory();
-
-    void setCategory(Category category);
-
-    int getPlace();
-
-    void setPlace(int place);
-
-    String toString();
-
-    enum Category {STANDARD, PREMIUM, BAR}
+    public enum Category {STANDARD, PREMIUM, BAR}
 }

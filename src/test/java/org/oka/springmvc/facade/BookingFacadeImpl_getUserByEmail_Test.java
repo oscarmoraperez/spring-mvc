@@ -5,7 +5,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.oka.springmvc.model.UserImpl;
+import org.oka.springmvc.model.User;
 import org.oka.springmvc.service.UserService;
 
 import static org.mockito.ArgumentMatchers.anyString;
@@ -24,7 +24,7 @@ public class BookingFacadeImpl_getUserByEmail_Test {
         // Given
         String email = "email";
 
-        when(userService.getUserByEmail(anyString())).thenReturn(new UserImpl(1, "Jose", "jose.canseco@aa.com"));
+        when(userService.getUserByEmail(anyString())).thenReturn(new User(1, "Jose", "jose.canseco@aa.com"));
         // When
         bookingFacadeImpl.getUserByEmail(email);
 

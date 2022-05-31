@@ -6,11 +6,13 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.oka.springmvc.model.Event;
-import org.oka.springmvc.model.EventImpl;
+import org.oka.springmvc.model.Event;
 import org.oka.springmvc.model.Ticket;
-import org.oka.springmvc.model.TicketImpl;
+import org.oka.springmvc.model.Ticket;
+import org.oka.springmvc.model.User;
 import org.oka.springmvc.service.TicketService;
 
+import java.net.UnknownServiceException;
 import java.util.List;
 
 import static java.time.LocalDate.*;
@@ -29,7 +31,7 @@ public class BookingFacadeImpl_getBookedTicketsByEvent_Test {
     @Test
     public void shouldCallTicketService() {
         // Given
-        Event event = EventImpl.builder().title("title").date(now()).build();
+        Event event = Event.builder().title("title").date(now()).build();
 
         // When
         bookingFacade.getBookedTickets(event, 11, 22);
@@ -41,8 +43,9 @@ public class BookingFacadeImpl_getBookedTicketsByEvent_Test {
     @Test
     public void shouldReturnListOfTicket() {
         // Given
-        Event event = EventImpl.builder().title("title").date(now()).build();
-        Ticket ticket = TicketImpl.builder().userId(1).eventId(3).place(66).category(BAR).build();
+        Event event = Event.builder().title("title").date(now()).build();
+        User user = User.builder().id(1).name("Carles").build();
+        Ticket ticket = Ticket.builder().user(user).event(event).place(66).category(BAR).build();
 
         when(ticketService.getBookedTickets(event, 33, 44)).thenReturn(List.of(ticket));
         // When

@@ -6,7 +6,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.oka.springmvc.model.Event;
-import org.oka.springmvc.model.EventImpl;
 import org.oka.springmvc.service.EventService;
 
 import java.time.LocalDate;
@@ -28,7 +27,7 @@ public class BookingFacadeImpl_getEventById_Test {
         // Given
         long eventId = 13;
 
-        when(eventService.getEventById(anyLong())).thenReturn(new EventImpl(1, "Jose", LocalDate.now()));
+        when(eventService.getEventById(anyLong())).thenReturn(new Event(1, "Jose", LocalDate.now()));
         // When
         bookingFacadeImpl.getEventById(eventId);
 
@@ -39,7 +38,7 @@ public class BookingFacadeImpl_getEventById_Test {
     @Test
     void shouldReturnEvent() {
         // Given
-        Event event = new EventImpl(1, "Jose", LocalDate.now());
+        Event event = new Event(1, "Jose", LocalDate.now());
 
         when(eventService.getEventById(anyLong())).thenReturn(event);
         // When

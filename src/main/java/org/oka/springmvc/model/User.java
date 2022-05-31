@@ -1,30 +1,30 @@
 package org.oka.springmvc.model;
 
-/**
- * Created by maksym_govorischev on 14/03/14.
- */
-public interface User {
-    /**
-     * User Id. UNIQUE.
-     *
-     * @return User Id.
-     */
-    long getId();
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
-    void setId(long id);
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
-    String getName();
-
-    void setName(String name);
-
-    /**
-     * User email. UNIQUE.
-     *
-     * @return User email.
-     */
-    String getEmail();
-
-    void setEmail(String email);
-
-    String toString();
+@AllArgsConstructor
+@Setter
+@Getter
+@ToString
+@EqualsAndHashCode
+@Builder
+@NoArgsConstructor
+@Entity(name = "UserDB")
+public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+    private String name;
+    private String email;
 }

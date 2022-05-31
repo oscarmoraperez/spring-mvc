@@ -5,9 +5,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.oka.springmvc.dao.EventDAO;
 import org.oka.springmvc.model.Event;
-import org.oka.springmvc.model.EventImpl;
+import org.oka.springmvc.repository.EventRepository;
+import org.springframework.data.domain.PageRequest;
 
 import java.util.List;
 
@@ -20,7 +20,7 @@ public class EventService_getEventsByTitle_Test {
     @InjectMocks
     EventService eventService;
     @Mock
-    EventDAO eventDAO;
+    EventRepository eventRepository;
 
     @Test
     public void shouldCallEventDAO() {
@@ -33,7 +33,7 @@ public class EventService_getEventsByTitle_Test {
         eventService.getEventsByTitle(title, pageSize, pageNum);
 
         // Then
-        verify(eventDAO).getByTitle(title, pageSize, pageNum);
+        verify(eventRepository).findByTitle(title, PageRequest.of(pageNum, pageSize));
     }
 
     @Test
@@ -42,9 +42,9 @@ public class EventService_getEventsByTitle_Test {
         String title = "title";
         int pageNum = 22;
         int pageSize = 66;
-        Event event = EventImpl.builder().title("title").build();
+        Event event = Event.builder().title("title").build();
 
-        when(eventDAO.getByTitle(title, pageSize, pageNum)).thenReturn(List.of(event));
+        when(eventRepository.findByTitle(title, PageRequest.of(pageNum, pageSize))).thenReturn(List.of(event));
         // When
         List<Event> eventsByTitle = eventService.getEventsByTitle(title, pageSize, pageNum);
 

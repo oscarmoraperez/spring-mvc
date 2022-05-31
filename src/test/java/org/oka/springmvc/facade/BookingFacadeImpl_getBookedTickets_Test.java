@@ -5,10 +5,11 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.oka.springmvc.model.Event;
 import org.oka.springmvc.model.Ticket;
-import org.oka.springmvc.model.TicketImpl;
+import org.oka.springmvc.model.Ticket;
 import org.oka.springmvc.model.User;
-import org.oka.springmvc.model.UserImpl;
+import org.oka.springmvc.model.User;
 import org.oka.springmvc.service.TicketService;
 
 import java.util.List;
@@ -28,7 +29,7 @@ public class BookingFacadeImpl_getBookedTickets_Test {
     @Test
     public void shouldCallTicketService() {
         // Given
-        User user = UserImpl.builder().id(1).name("Jose").email("jose@domain.com").build();
+        User user = User.builder().id(1).name("Jose").email("jose@domain.com").build();
 
         // When
         bookingFacade.getBookedTickets(user, 33, 44);
@@ -40,8 +41,9 @@ public class BookingFacadeImpl_getBookedTickets_Test {
     @Test
     public void shouldReturnListOfTicket() {
         // Given
-        User user = UserImpl.builder().id(1).name("Jose").email("jose@domain.com").build();
-        Ticket ticket = TicketImpl.builder().userId(1).eventId(3).place(66).category(BAR).build();
+        User user = User.builder().id(1).name("Jose").email("jose@domain.com").build();
+        Event event = Event.builder().id(1).title("title").build();
+        Ticket ticket = Ticket.builder().user(user).event(event).place(66).category(BAR).build();
 
         when(ticketService.getBookedTickets(user, 33, 44)).thenReturn(List.of(ticket));
         // When

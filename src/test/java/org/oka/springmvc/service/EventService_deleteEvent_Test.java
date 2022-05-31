@@ -5,9 +5,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.oka.springmvc.dao.EventDAO;
+import org.oka.springmvc.repository.EventRepository;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -16,24 +17,36 @@ public class EventService_deleteEvent_Test {
     @InjectMocks
     EventService eventService;
     @Mock
-    EventDAO eventDAO;
+    EventRepository eventRepository;
 
     @Test
-    void shouldCallEventDAO() {
+    void shouldCallEventRepository_ExistsById() {
         // Given
 
         // When
         eventService.deleteEvent(1);
 
         // Then
-        verify(eventDAO).delete(1);
+        verify(eventRepository).existsById(1L);
     }
 
     @Test
-    void shouldReturnEventDAOResult() {
+    void shouldCallEventRepository_DeleteById() {
         // Given
 
-        when(eventDAO.delete(1)).thenReturn(true);
+        when(eventRepository.existsById(anyLong())).thenReturn(true);
+        // When
+        eventService.deleteEvent(1);
+
+        // Then
+        verify(eventRepository).deleteById(1L);
+    }
+
+    @Test
+    void shouldReturnEventResultResult() {
+        // Given
+
+        when(eventRepository.existsById(1L)).thenReturn(true);
         // When
         boolean result = eventService.deleteEvent(1);
 

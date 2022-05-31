@@ -1,0 +1,34 @@
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<body>
+<br/>
+<br/>
+<br/>
+<center>
+    <h1>Ticket List</h1>
+    <table border="1">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Event</th>
+            <th>Event (title)</th>
+            <th>User</th>
+            <th>User (name)</th>
+            <th>Category</th>
+            <th>Place</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="ticket: ${tickets}">
+            <td th:text="${ticket.id}"/>
+            <td th:text="${ticket.event.id}"/>
+            <td th:text="${ticket.event.title}"/>
+            <td th:text="${ticket.user.id}"/>
+            <td th:text="${ticket.user.name}"/>
+            <td th:text="${ticket.category}"/>
+            <td th:text="${ticket.place}"/>
+        </tr>
+        </tbody>
+    </table>
+</center>
+</body>
+</html>

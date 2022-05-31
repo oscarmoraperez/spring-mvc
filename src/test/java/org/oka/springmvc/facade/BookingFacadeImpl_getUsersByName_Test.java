@@ -5,7 +5,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.oka.springmvc.model.UserImpl;
+import org.oka.springmvc.model.User;
 import org.oka.springmvc.service.UserService;
 
 import java.util.List;
@@ -27,7 +27,7 @@ public class BookingFacadeImpl_getUsersByName_Test {
         // Given
 
         when(userService.getUsersByName(anyString(), anyInt(), anyInt()))
-                .thenReturn(List.of(new UserImpl(1, "Jose", "jose.canseco@aa.com")));
+                .thenReturn(List.of(new User(1, "Jose", "jose.canseco@aa.com")));
         // When
         bookingFacadeImpl.getUsersByName("name", 4, 10);
 

@@ -1,4 +1,7 @@
-server:
-  tomcat:
-    threads:
-      max: 5
+spring:
+  jpa:
+    defer-datasource-initialization: true
+  h2:
+    console:
+      enabled: true
+      path: /h2-console

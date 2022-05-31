@@ -2,46 +2,42 @@ package org.oka.springmvc.service;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.oka.springmvc.dao.TicketDAO;
+import org.oka.springmvc.repository.TicketRepository;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class TicketService_cancelTicket_Test {
     @InjectMocks
     TicketService ticketService;
     @Mock
-    TicketDAO ticketDAO;
+    TicketRepository ticketRepository;
 
     @Test
-    public void shouldCallDAO() {
+    public void shouldNeverCallTicketRepository() {
         // Given
 
+        when(ticketRepository.existsById(anyLong())).thenReturn(false);
         // When
         ticketService.cancelTicket(1);
 
         // Then
-        verify(ticketDAO).cancelTicket(1);
+        verify(ticketRepository, never()).deleteById(1);
     }
 
-    @ParameterizedTest
-    @ValueSource(booleans = {true, false})
-    public void shouldReturnCancelResult(final boolean result) {
+    @Test
+    public void shouldCallTicketRepository_DeleteById() {
         // Given
 
-        when(ticketDAO.cancelTicket(1)).thenReturn(result);
+        when(ticketRepository.existsById(anyLong())).thenReturn(true);
         // When
-        boolean actual = ticketService.cancelTicket(1);
+        ticketService.cancelTicket(1);
 
         // Then
-        assertThat(actual).isEqualTo(result);
+        verify(ticketRepository).deleteById(1);
     }
 }

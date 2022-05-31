@@ -1,0 +1,26 @@
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<body>
+<br/>
+<br/>
+<br/>
+<center>
+    <h1>User List</h1>
+    <table border="1">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Email</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user: ${users}">
+            <td th:text="${user.id}"/>
+            <td th:text="${user.name}"/>
+            <td th:text="${user.email}"/>
+        </tr>
+        </tbody>
+    </table>
+</center>
+</body>
+</html>
