@@ -7,6 +7,7 @@ import org.oka.springmvc.repository.EventRepository;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
 
+import javax.persistence.EntityNotFoundException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -19,7 +20,7 @@ public class EventService {
     public Event getEventById(final long eventId) {
         log.info("Retrieving event by id: " + eventId);
 
-        return eventRepository.findById(eventId).orElseThrow(() -> new RuntimeException("Event not found (byId: " + eventId + ")"));
+        return eventRepository.findById(eventId).orElseThrow(() -> new EntityNotFoundException("Event not found (byId: " + eventId + ")"));
     }
 
     public List<Event> getEventsByTitle(final String title, final int pageSize, final int pageNum) {

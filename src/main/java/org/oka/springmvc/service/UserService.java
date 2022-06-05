@@ -7,6 +7,7 @@ import org.oka.springmvc.repository.UserRepository;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @Slf4j
@@ -19,13 +20,13 @@ public class UserService {
     public User getUserById(final long userId) {
         log.info("Retrieving tickets by userId: " + userId);
 
-        return userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found (byId: " + userId + ")"));
+        return userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("User not found (byId: " + userId + ")"));
     }
 
     public User getUserByEmail(final String email) {
         log.info("Retrieving users by email: " + email);
 
-        return userRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("User not found (byEmail: " + email + ")"));
+        return userRepository.findByEmail(email).orElseThrow(() -> new EntityNotFoundException("User not found (byEmail: " + email + ")"));
     }
 
     public List<User> getUsersByName(final String name, final int pageSize, final int pageNum) {
