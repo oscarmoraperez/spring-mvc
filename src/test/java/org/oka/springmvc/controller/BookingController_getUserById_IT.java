@@ -33,4 +33,21 @@ public class BookingController_getUserById_IT {
                 .andExpect(content().contentType("text/html;charset=UTF-8"))
                 .andExpect(xpath("//p[text()='Jose']").exists());
     }
+
+    @Test
+    public void shouldReturnErrorWhenUserDoesNotExist() throws Exception {
+        // Given
+
+        // When
+        ResultActions resultActions = this.mockMvc
+                .perform(get("/user/{id}", 99)
+                        .header("content-type", "text/html"))
+                .andDo(print());
+
+        // Then
+        resultActions
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("text/html;charset=UTF-8"))
+                .andExpect(xpath("//p[text()='User not found (byId: 99)']").exists());
+    }
 }
