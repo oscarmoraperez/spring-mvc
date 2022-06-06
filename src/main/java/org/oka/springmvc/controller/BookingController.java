@@ -42,7 +42,7 @@ public class BookingController {
         return new ResponseEntity<>(eventById, OK);
     }
 
-    @GetMapping(value = "/eventsByTitle", consumes = {"text/html"}, produces = {"application/json"})
+    @GetMapping(value = "/eventsByTitle", produces = {"text/html"})
     public String getEventByTitle(@RequestParam("title") final String title,
                                   @RequestParam("pageSize") final int pageSize,
                                   @RequestParam("pageNum") final int pageNum,
@@ -60,7 +60,7 @@ public class BookingController {
         return new ResponseEntity<>(events, OK);
     }
 
-    @GetMapping("/eventsByDate")
+    @GetMapping(value = "/eventsByDate", produces = {"text/html"})
     public String getEventByDate(@RequestParam("date") @DateTimeFormat(iso = DATE) final LocalDate localDate,
                                  @RequestParam("pageSize") final int pageSize,
                                  @RequestParam("pageNum") final int pageNum,
@@ -101,7 +101,7 @@ public class BookingController {
         return new ResponseEntity<>(NO_CONTENT);
     }
 
-    @GetMapping(value = "/user/{id}")
+    @GetMapping(value = "/user/{id}", produces = {"text/html"})
     public String getUserById(@PathVariable("id") final Long id, Model model) {
         User userById = bookingFacade.getUserById(id);
         model.addAttribute("user", userById);
@@ -114,7 +114,7 @@ public class BookingController {
         return new ResponseEntity<>(userById, OK);
     }
 
-    @GetMapping(value = "/usersByEmail", consumes = {"text/html"}, produces = {"application/json"})
+    @GetMapping(value = "/usersByEmail", consumes = {"text/html"}, produces = {"text/html"})
     public String getUserByEmail(@RequestParam("email") final String email,
                                  Model model) {
         User user = bookingFacade.getUserByEmail(email);
@@ -178,7 +178,7 @@ public class BookingController {
         return new ResponseEntity<>(ticket, OK);
     }
 
-    @GetMapping(value = "/ticketsByUser", produces = {"text/html;charset=UTF-8"})
+    @GetMapping(value = "/ticketsByUser", produces = {"text/html"})
     public String getTicketByUser(@RequestParam("userId") final long userId,
                                   @RequestParam("pageSize") final int pageSize,
                                   @RequestParam("pageNum") final int pageNum,
@@ -189,7 +189,7 @@ public class BookingController {
         return "tickets";
     }
 
-    @GetMapping(value = "/ticketsByEvent")
+    @GetMapping(value = "/ticketsByEvent", produces = {"text/html"})
     public String getTicketByEvent(@RequestParam("eventId") final long eventId,
                                    @RequestParam("pageSize") final int pageSize,
                                    @RequestParam("pageNum") final int pageNum,
