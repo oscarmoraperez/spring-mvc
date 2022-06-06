@@ -155,4 +155,8 @@ public interface BookingFacade {
      */
     boolean cancelTicket(long ticketId);
 
+    /**
+     * Loads a set of tickets from XML file.
+     */
+    void preloadTickets();
 }

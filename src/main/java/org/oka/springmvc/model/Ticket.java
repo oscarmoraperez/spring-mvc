@@ -1,5 +1,6 @@
 package org.oka.springmvc.model;
 
+import com.sun.xml.bind.AnyTypeAdapter;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -15,6 +16,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlSeeAlso;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 @AllArgsConstructor
 @Setter
@@ -24,6 +29,9 @@ import javax.persistence.OneToOne;
 @Builder
 @NoArgsConstructor
 @Entity
+@XmlRootElement
+@XmlSeeAlso({Ticket.class})
+@XmlJavaTypeAdapter(AnyTypeAdapter.class)
 public class Ticket {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
