@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ticketsContainer>
+    <tickets>
+        <ticket>
+            <category>BAR</category>
+            <event>
+                <id>1</id>
+                <title>The King Lion</title>
+                <date>2022-04-04</date>
+            </event>
+            <place>999</place>
+            <user>
+                <email>manu@domain.com</email>
+                <id>6</id>
+                <name>Manu</name>
+            </user>
+        </ticket>
+        <ticket>
+            <category>BAR</category>
+            <event>
+                <id>3</id>
+                <title>Hamlet</title>
+                <date>2020-02-03</date>
+            </event>
+            <place>999</place>
+            <user>
+                <email>manu@domain.com</email>
+                <id>6</id>
+                <name>Manu</name>
+            </user>
+        </ticket>
+    </tickets>
+</ticketsContainer>
