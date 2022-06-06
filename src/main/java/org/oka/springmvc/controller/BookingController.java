@@ -36,13 +36,13 @@ public class BookingController {
         return "event";
     }
 
-    @GetMapping(value = "/event/{id}", consumes = {"application/json; charset=UTF-8"}, produces = {"application/json; charset=UTF-8"})
+    @GetMapping(value = "/event/{id}", consumes = {"application/json"}, produces = {"application/json"})
     public ResponseEntity<Event> getEventByIdAsJson(@PathVariable("id") final Long id) {
         Event eventById = bookingFacade.getEventById(id);
         return new ResponseEntity<>(eventById, OK);
     }
 
-    @GetMapping(value = "/eventsByTitle", consumes = {"text/html; charset=UTF-8"}, produces = {"application/json; charset=UTF-8"})
+    @GetMapping(value = "/eventsByTitle", consumes = {"text/html"}, produces = {"application/json"})
     public String getEventByTitle(@RequestParam("title") final String title,
                                   @RequestParam("pageSize") final int pageSize,
                                   @RequestParam("pageNum") final int pageNum,
@@ -52,7 +52,7 @@ public class BookingController {
         return "events";
     }
 
-    @GetMapping(value = "/eventsByTitle", consumes = {"application/json; charset=UTF-8"}, produces = {"application/json; charset=UTF-8"})
+    @GetMapping(value = "/eventsByTitle", consumes = {"application/json"}, produces = {"application/json"})
     public ResponseEntity<List<Event>> getEventByTitleAsJson(@RequestParam("title") final String title,
                                                              @RequestParam("pageSize") final int pageSize,
                                                              @RequestParam("pageNum") final int pageNum) {
@@ -70,7 +70,7 @@ public class BookingController {
         return "events";
     }
 
-    @GetMapping(value = "/eventsByDate", consumes = {"application/json; charset=UTF-8"}, produces = {"application/json; charset=UTF-8"})
+    @GetMapping(value = "/eventsByDate", consumes = {"application/json"}, produces = {"application/json"})
     public ResponseEntity<List<Event>> getEventByDateAsJson(@RequestParam("date") @DateTimeFormat(iso = DATE) final LocalDate localDate,
                                                             @RequestParam("pageSize") final int pageSize,
                                                             @RequestParam("pageNum") final int pageNum) {
@@ -108,13 +108,13 @@ public class BookingController {
         return "user";
     }
 
-    @GetMapping(value = "/user/{id}", consumes = {"application/json; charset=UTF-8"}, produces = {"application/json; charset=UTF-8"})
+    @GetMapping(value = "/user/{id}", consumes = {"application/json"}, produces = {"application/json"})
     public ResponseEntity<User> getUserByIdAsJson(@PathVariable("id") final Long id) {
         User userById = bookingFacade.getUserById(id);
         return new ResponseEntity<>(userById, OK);
     }
 
-    @GetMapping(value = "/usersByEmail", consumes = {"text/html; charset=UTF-8"}, produces = {"application/json; charset=UTF-8"})
+    @GetMapping(value = "/usersByEmail", consumes = {"text/html"}, produces = {"application/json"})
     public String getUserByEmail(@RequestParam("email") final String email,
                                  Model model) {
         User user = bookingFacade.getUserByEmail(email);
@@ -122,13 +122,13 @@ public class BookingController {
         return "user";
     }
 
-    @GetMapping(value = "/usersByEmail", consumes = {"application/json; charset=UTF-8"}, produces = {"application/json; charset=UTF-8"})
+    @GetMapping(value = "/usersByEmail", consumes = {"application/json"}, produces = {"application/json"})
     public ResponseEntity<User> getUserByEmailAsJson(@RequestParam("email") final String email) {
         User user = bookingFacade.getUserByEmail(email);
         return new ResponseEntity<>(user, OK);
     }
 
-    @GetMapping(value = "/usersByName")
+    @GetMapping(value = "/usersByName", produces = {"text/html"})
     public String getUserByName(@RequestParam("name") final String name,
                                 @RequestParam("pageSize") final int pageSize,
                                 @RequestParam("pageNum") final int pageNum,
@@ -138,7 +138,7 @@ public class BookingController {
         return "users";
     }
 
-    @GetMapping(value = "/usersByName", consumes = {"application/json; charset=UTF-8"}, produces = {"application/json; charset=UTF-8"})
+    @GetMapping(value = "/usersByName", consumes = {"application/json"}, produces = {"application/json"})
     public ResponseEntity<List<User>> getUserByNameAsJson(@RequestParam("name") final String name,
                                                           @RequestParam("pageSize") final int pageSize,
                                                           @RequestParam("pageNum") final int pageNum) {
@@ -169,7 +169,7 @@ public class BookingController {
         return new ResponseEntity<>(NO_CONTENT);
     }
 
-    @PostMapping(value = "/ticket", consumes = {"application/json; charset=UTF-8"}, produces = {"application/json; charset=UTF-8"})
+    @PostMapping(value = "/ticket", consumes = {"application/json"}, produces = {"application/json"})
     public ResponseEntity<Ticket> bookTicket(@RequestParam("userId") long userId,
                                              @RequestParam("eventId") long eventId,
                                              @RequestParam("place") int place,
@@ -178,7 +178,7 @@ public class BookingController {
         return new ResponseEntity<>(ticket, OK);
     }
 
-    @GetMapping(value = "/ticketsByUser")
+    @GetMapping(value = "/ticketsByUser", produces = {"text/html;charset=UTF-8"})
     public String getTicketByUser(@RequestParam("userId") final long userId,
                                   @RequestParam("pageSize") final int pageSize,
                                   @RequestParam("pageNum") final int pageNum,

@@ -5,3 +5,6 @@ spring:
     console:
       enabled: true
       path: /h2-console
+  http:
+    encoding:
+      charset=UTF-8

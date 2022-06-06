@@ -30,7 +30,7 @@ public class BookingController_getUserById_IT {
         // Then
         resultActions
                 .andExpect(status().isOk())
-                .andExpect(content().contentType("text/html;charset=UTF-8"))
+                .andExpect(content().contentType("text/html;charset=ISO-8859-1"))
                 .andExpect(xpath("//p[text()='Jose']").exists());
     }
 
@@ -47,7 +47,7 @@ public class BookingController_getUserById_IT {
         // Then
         resultActions
                 .andExpect(status().isOk())
-                .andExpect(content().contentType("text/html;charset=UTF-8"))
+                .andExpect(content().contentType("text/html;charset=ISO-8859-1"))
                 .andExpect(xpath("//p[text()='User not found (byId: 99)']").exists());
     }
 }

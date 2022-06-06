@@ -33,7 +33,7 @@ public class BookingController_getUserByName_IT {
         // Then
         resultActions
                 .andExpect(status().isOk())
-                .andExpect(content().contentType("text/html;charset=UTF-8"))
+                .andExpect(content().contentType("text/html;charset=ISO-8859-1"))
                 .andExpect(xpath("//td[text()='Reese']").exists());
     }
 }

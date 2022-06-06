@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -20,7 +21,7 @@ import static javax.xml.bind.Marshaller.JAXB_FORMATTED_OUTPUT;
 
 @EnableWebMvc
 @EnableAutoConfiguration
-@Configurable
+@Configuration
 @ComponentScan(basePackages = {"org.oka.springmvc"})
 public class ApplicationConfig implements WebMvcConfigurer {
 
