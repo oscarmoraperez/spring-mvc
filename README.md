@@ -1,6 +1,6 @@
-# Java Mentoring Program: Spring MVC 
+# Spring MVC 
 
-This maven-based project contains the exercises defined in the 'spring-mvc' module of Java Mentoring program.
+This maven-based project contains a demo project to learn how to use MVC design pattern in a simple business case of Events / Tickets and Users.
 
 0) To run the project one have the following options:
 
